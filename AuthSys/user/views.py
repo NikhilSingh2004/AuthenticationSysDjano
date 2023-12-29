@@ -2,8 +2,8 @@ from . forms import SingUpForm
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 
 def user_home(request):
@@ -51,4 +51,21 @@ def log_in(request):
 
 def log_out(request):
     logout(request)
+    return HttpResponseRedirect('/user/login/')
+
+def change_pass(request):
+    if request.user.is_authenticated:
+        fm = PasswordChangeForm(user=request.user)
+        if request.method == "POST":
+            try:   
+                fm = PasswordChangeForm(user=request.user, data=request.POST)
+                if fm.is_valid():
+                    fm.save()
+                    messages.success(request, "Password Changed Successfuly!")
+                    return HttpResponseRedirect('/user/')
+            except Exception as e:
+                print(e.__str__())
+                return render(request, 'user/changePass.html', {'form' : fm})
+        else:
+            return render(request, 'user/changePass.html', {'form' : fm})
     return HttpResponseRedirect('/user/login/')
