@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>SignUp Page</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5 text-center">
+    
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h1 class="display-5 fw-bold">SingUp</h1>
+            
+            {% if form.non_field_errors %}
+
+                {% for error in form.non_field_errors %}
+
+                    <p class="error"> {{error}} </p>
+
+                {% endfor %}
+
+            {% endif %}
+
+            {% if form %}
+                {% for field in form %}
+                    <div class="row mb-3">
+                        <div class="col-sm-12 mb-2">
+                            <h3 for="{{ field.id_for_label }}" class="col-form-label">{{ field.label_tag }}</h3>
+                        </div>
+                        <div class="col-sm-12">
+                            {{ field }}
+                            <span class="Errors">{{ field.errors | striptags }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <button type="submit" class="btn btn-success">Sing Up</button>
+
+        </form>
+
+        <div class="container">
+            <h3 class="fw-bold">Alreday a user? <a href="{% url 'LogIn' %}">LogIn</a></h3>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

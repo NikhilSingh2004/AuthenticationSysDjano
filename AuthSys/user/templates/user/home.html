@@ -1,0 +1,32 @@
+{% extends "core/index.html" %}
+
+{% block SignLog %}
+
+<li class="nav-item">
+    <form method='post'>
+        {% csrf_token %}
+        <a class="btn btn-outline-danger mx-2" href="{% url 'LogOut' %}">Log Out</a>
+    </form>
+</li>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    {% if messages %}
+
+        {% for msg in messages %}
+
+            <span {% if msg.tags %} class="{{msg.tags}}" {% endif %}>{{msg}}</span>
+
+        {% endfor %}
+
+    {% endif %}
+
+    <h1 class="display-5  fw-bold">Welcome {% if Username %} {{Username}} {% endif %} to XYZ Website!.</h1>
+
+</div>
+
+{% endblock content %}
